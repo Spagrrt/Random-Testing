@@ -62,7 +62,9 @@ public class DisplayPane extends JPanel implements ActionListener, MouseListener
 
     @Override
     public void keyPressed(KeyEvent e) {
-
+        if(e.getKeyCode() == KeyEvent.VK_ENTER){
+            blockList.clear();
+        }
     }
 
     @Override
@@ -81,13 +83,16 @@ public class DisplayPane extends JPanel implements ActionListener, MouseListener
             blockList.add(new TestBlock(e.getX() - 25, e.getY() - 25, 50, 50, Color.GREEN, 3));
             System.out.println("Mouse Clicked");
         }
-        if(e.getButton() == 2){
+        else if(e.getButton() == 2){
             blockList.add(new TestBlock(e.getX() - 75, e.getY() - 75, 150, 150, Color.BLUE, 1));
             System.out.println("Mouse Clicked");
         }
-        if(e.getButton() == 3){
+        else if(e.getButton() == 3){
             blockList.add(new TestBlock(e.getX() - 50, e.getY() - 50, 100, 100, Color.RED, 2));
             System.out.println("Mouse Clicked");
+        }
+        else {
+            blockList.add(new TestBlock(e.getX() - 250, e.getY() - 250, 500, 500, Color.MAGENTA, 70));
         }
     }
 
