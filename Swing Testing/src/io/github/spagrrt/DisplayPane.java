@@ -14,7 +14,10 @@ public class DisplayPane extends JPanel implements ActionListener, MouseListener
 
     Timer timer;
 
-    private int count = 0;
+    private boolean showSel = false;
+    private int xSel = 25;
+    private int ySel = 25;
+    private boolean superCreate = false;
 
     public DisplayPane(){
         timer = new Timer(5, this);
@@ -34,6 +37,9 @@ public class DisplayPane extends JPanel implements ActionListener, MouseListener
             g.setColor(Color.BLACK);
             g.drawRect(block.getX(), block.getY(), block.getXSize(), block.getYSize());
         }
+        if(showSel){
+            g.fillRect(xSel - 1, ySel - 1, 2, 2);
+        }
     }
 
     public static void main(String[] args) {
@@ -48,6 +54,11 @@ public class DisplayPane extends JPanel implements ActionListener, MouseListener
         for(TestBlock block : blockList){
             block.checkCollisions(Constants.screenX, Constants.screenY);
             block.move();
+            block.incHue(0.01);
+        }
+
+        if(superCreate){
+            blockList.add(new TestBlock(xSel - 25, ySel - 25, 50, 50, Color.GREEN, 3));
         }
 
         //Refreshes the pane; leave at bottom of method
@@ -64,6 +75,17 @@ public class DisplayPane extends JPanel implements ActionListener, MouseListener
     public void keyPressed(KeyEvent e) {
         if(e.getKeyCode() == KeyEvent.VK_ENTER){
             blockList.clear();
+        }
+        if(e.getKeyCode() == KeyEvent.VK_SPACE){
+            for(TestBlock block : blockList){
+                block.makeRainbow();
+            }
+        }
+        if(e.getKeyCode() == KeyEvent.VK_S){
+            showSel = !showSel;
+        }
+        if(e.getKeyCode() == KeyEvent.VK_E){
+            superCreate = !superCreate;
         }
     }
 
@@ -92,7 +114,8 @@ public class DisplayPane extends JPanel implements ActionListener, MouseListener
             System.out.println("Mouse Clicked");
         }
         else {
-            blockList.add(new TestBlock(e.getX() - 250, e.getY() - 250, 500, 500, Color.MAGENTA, 70));
+            xSel = e.getX();
+            ySel = e.getY();
         }
     }
 

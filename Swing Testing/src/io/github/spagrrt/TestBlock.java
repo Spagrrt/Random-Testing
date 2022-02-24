@@ -17,6 +17,9 @@ public class TestBlock {
 
     private Color color;
 
+    private boolean rainbow = false;
+    private double hue = 0;
+
     public TestBlock(int x, int y, int xSize, int ySize, Color color, int speed) {
         this.x = x;
         this.y = y;
@@ -80,4 +83,19 @@ public class TestBlock {
     public void setColor(Color color){
         this.color = color;
     }
+
+    public void makeRainbow(){
+        rainbow = true;
+    }
+
+    public void incHue(double hue){
+        this.hue += hue;
+        if(this.hue < 1){
+            hue -= 1;
+        }
+        if(rainbow) {
+            this.color = Color.getHSBColor((float)this.hue, 1f, 1f);
+        }
+    }
+
 }
